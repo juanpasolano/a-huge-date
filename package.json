@@ -1,0 +1,21 @@
+{
+  "name": "a-huge-date",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build; cd public; python -m SimpleHTTPServer",
+    "build": "webpack --config webpack.config.js",
+    "build:watch": "webpack --config webpack.config.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.28.2",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.5",
+    "to-string-loader": "^1.1.5",
+    "webpack": "^2.6.0"
+  }
+}
