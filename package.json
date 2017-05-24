@@ -13,6 +13,13 @@
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.2",
+    "jasmine-core": "^2.6.2",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.3",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "to-string-loader": "^1.1.5",

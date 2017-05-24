@@ -1,2 +1,2 @@
 import DemoComponent from 'demo-component/demo-component'
-window.customElements.define("demo-component", DemoComponent);
+window.customElements.define(DemoComponent.HTMLTagName(), DemoComponent);
