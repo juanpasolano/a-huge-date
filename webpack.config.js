@@ -1,3 +1,4 @@
+var path = require( 'path' );
 module.exports = {
   entry: "./src/index.js",
   output: {
@@ -12,5 +13,9 @@ module.exports = {
         loaders: [ 'to-string-loader', 'css-loader', 'sass-loader' ]
       }
     ]
+  },
+  resolve: {
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
+    extensions: ['*']
   }
 }
