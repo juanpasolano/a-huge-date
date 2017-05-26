@@ -6,7 +6,7 @@ describe('DemoComponent', () => {
     window.customElements.define(DemoComponent.HTMLTagName(), DemoComponent);
   })
   beforeEach(() => {
-    component = document.createElement('demo-component');
+    component = document.createElement(DemoComponent.HTMLTagName());
     document.body.appendChild(component);
   })
   afterEach(() => {

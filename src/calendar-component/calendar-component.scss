@@ -1,0 +1,38 @@
+:host {
+    background: #4ecdc4;
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header {
+    display: flex;
+    color: white;
+    span {
+        flex: 1;
+        text-align: center
+    }
+}
+$cellWidth:  14.2857142857%;
+.weekdays {
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    span {
+        text-align: center;
+        width: $cellWidth;
+    }
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    button {
+        width: $cellWidth;
+        height: 47px;
+        display: block;
+        border-radius: 0;
+        background: white;
+        border: 0;
+        &.selected {
+            background: #4ecdc4;
+        }
+    }
+}
