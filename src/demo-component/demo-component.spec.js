@@ -1,12 +1,13 @@
 import DemoComponent from './demo-component'
+const tagName = DemoComponent.HTMLTagName(); 
 
 describe('DemoComponent', () => {
   let component = null;
   beforeAll( ()=> {
-    window.customElements.define(DemoComponent.HTMLTagName(), DemoComponent);
+    window.customElements.define(tagName, DemoComponent);
   })
   beforeEach(() => {
-    component = document.createElement(DemoComponent.HTMLTagName());
+    component = document.createElement(tagName);
     document.body.appendChild(component);
   })
   afterEach(() => {
@@ -17,7 +18,7 @@ describe('DemoComponent', () => {
     expect(component).not.toBeNull();
   })
 
-  it('has correct text', ()=>{
+  it('contains a calendar component', ()=>{
     expect(component.shadowRoot.innerHTML).toEqual('This is a demo component');
   })
 })

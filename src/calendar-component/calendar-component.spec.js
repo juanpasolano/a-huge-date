@@ -1,11 +1,10 @@
-import CalendarComponent, { getMonthDaysArray, isLeapYear } from './calendar-component'
+import CalendarComponent, { getMonthDaysArray, isLeapYear, CALENDAR_EVENTS } from './calendar-component'
 const tagName = CalendarComponent.HTMLTagName(); 
 
 describe('CalendarComponent', () => {
   beforeAll( ()=> {
     window.customElements.define(tagName, CalendarComponent);
   })
-
   describe('default', () => {
     let component = null;
     beforeEach(() => {
@@ -73,7 +72,7 @@ describe('CalendarComponent', () => {
       })
     })
     
-    it('has elements 35 in the grid', () => {
+    it('has 35 elements in the grid', () => {
       const children = root.querySelector('.grid').children.length;
       expect(children).toEqual(35)
     })
@@ -81,7 +80,7 @@ describe('CalendarComponent', () => {
     describe('when clicking a day', ()=> {
       it('emits an event on day click', () => {
         const handlerSpy = jasmine.createSpy('click');
-        component.addEventListener('day-selected', handlerSpy);
+        component.addEventListener(CALENDAR_EVENTS.SELECTED_DAY, handlerSpy);
         root.querySelector('.grid button').click();
         expect(handlerSpy).toHaveBeenCalled()
       })
@@ -97,7 +96,7 @@ describe('CalendarComponent', () => {
           const classList = root.querySelector('.grid button').classList;
           root.querySelectorAll('.grid button')[1].click();
           expect(classList.contains('selected')).toEqual(false);
-        })
+        }) 
       })
     })
   }) 

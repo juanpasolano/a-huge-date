@@ -1,24 +1,35 @@
 :host {
-    background: #4ecdc4;
     display: block;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0px 10px 10px 10px;
 }
 .header {
     display: flex;
-    color: white;
+    padding: 20px 0;
     span {
         flex: 1;
         text-align: center
     }
+    .title {
+        font-size: 1.3em;
+    }
+    .prev, .next {
+        cursor: pointer;
+        svg {
+            width: 20px;
+        }
+    }
 }
-$cellWidth:  14.2857142857%;
+$cellWidth:  14.6%;
 .weekdays {
     display: flex;
     flex-wrap: wrap;
-    color: white;
+    font-size: 0.8em;
+    margin-bottom: 10px;
     span {
         text-align: center;
         width: $cellWidth;
+        margin-left: -1px;
     }
 }
 .grid {
@@ -30,9 +41,21 @@ $cellWidth:  14.2857142857%;
         display: block;
         border-radius: 0;
         background: white;
-        border: 0;
+        -webkit-appearance: none;
+        border: 1px solid #d0d0d0;
+        margin-top: -1px;
+        margin-left: -1px;
+        &:focus {
+            outline:0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
         &.selected {
             background: #4ecdc4;
+            border: 1px solid #4ecdc4;
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-weight: bold;
         }
     }
 }

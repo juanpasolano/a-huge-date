@@ -8,11 +8,13 @@
     "serve": "cd public; python -m SimpleHTTPServer",
     "build": "webpack --config webpack.config.js",
     "build:watch": "webpack --config webpack.config.js --watch",
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "dev": "concurrently --names \"HTTP,WATCH\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm start\" \"npm run build:watch\" \"npm run test\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^3.4.0",
     "css-loader": "^0.28.2",
     "jasmine-core": "^2.6.2",
     "karma": "^1.7.0",

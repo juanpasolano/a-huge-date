@@ -33,14 +33,20 @@ export const getMonthDaysArray = (year, month) => {
   return calendar
 }
 
+export const CALENDAR_EVENTS = {
+  SELECTED_DAY: 'selected-day',
+} 
+
+const arrLeft = `<svg class="Polaris-Icon__Svg" viewBox="0 0 20 20"><path d="M17 9H5.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L5.414 11H17a1 1 0 1 0 0-2" fill-rule="evenodd"></path></svg>`
+const arrRight = `<svg class="Polaris-Icon__Svg" viewBox="0 0 20 20"><path d="M17.707 9.293l-5-5a.999.999 0 1 0-1.414 1.414L14.586 9H3a1 1 0 1 0 0 2h11.586l-3.293 3.293a.999.999 0 1 0 1.414 1.414l5-5a.999.999 0 0 0 0-1.414" fill-rule="evenodd"></path></svg>`
 const template = ({weekdays, currentYear, currentMonth}) => {
   return `
     <style>${styles}</style> 
     <div class="cal">
       <div class="header">
-        <span class="prev">&lang;</span>
+        <span class="prev">${arrLeft}</span>
         <span class="title">${MONTHS[currentMonth]} ${currentYear}</span>
-        <span class="next">&rang;</span>
+        <span class="next">${arrRight}</span>
       </div> 
       <div class="weekdays">
         ${weekdays.map( day => `<span>${day}</span>`).join('')}
@@ -55,6 +61,7 @@ export default class CalendarComponent extends HTMLElement {
   constructor(){
     super();
     this.attachShadow({mode: 'open'});
+    this.selected = null; //ButtonDOMElement
   }
   connectedCallback(){
     this.rendered = true;
@@ -97,10 +104,12 @@ export default class CalendarComponent extends HTMLElement {
     }
   }
   onDayClick(btn, e){
-    btn.className = "selected";
-    if(this.selected) this.selected.className = '';
-    this.selected = btn;
-    this.dispatchEvent(new CustomEvent('day-selected', {detail: btn.date}))
+    if(btn !== this.selected || !this.selected) {
+      btn.className = "selected";
+      if(this.selected) this.selected.className = '';
+      this.selected = btn;
+      this.dispatchEvent(new CustomEvent(CALENDAR_EVENTS.SELECTED_DAY, {detail: btn.date}))
+    }
   }
   renderTitle(){
     this.$title.innerHTML = `${MONTHS[this.getMonth()]} ${this.getYear()}`
@@ -112,6 +121,10 @@ export default class CalendarComponent extends HTMLElement {
       btn.onclick =  this.onDayClick.bind(this, btn);
       btn.textContent = i.getDate();
       btn.date = i;
+      if(this.selected && this.selected.date.getTime() === i.getTime()) { 
+        btn.classList = 'selected';
+        this.selected = btn;
+      }
       this.$grid.appendChild(btn)
       return btn
     });
