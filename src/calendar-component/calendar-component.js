@@ -21,13 +21,19 @@ export const getMonthDaysArray = (year, month) => {
   const calendar = Array.apply(null, new Array(length)).map((i, idx) => {
     if(idx<startDay) {
       const day = (prevMonthDays+(idx-startDay))+1;
-      return new Date(prevMonthYear, prevMonth, day);
+      return {
+        date: new Date(prevMonthYear, prevMonth, day),
+      };
     } else if(idx>=startDay && idx<daysInMonth[month]+startDay) {
       const day = idx-startDay+1;
-      return new Date(year, month, day);
+      return {
+        date: new Date(year, month, day),
+      }
     } else {
       const day = idx-(daysInMonth[month]+startDay)+1;
-      return new Date(nextMonthYear, nextMonth, day);
+      return {
+        date: new Date(nextMonthYear, nextMonth, day),
+      }
     }
   })
   return calendar
@@ -73,6 +79,7 @@ export default class CalendarComponent extends HTMLElement {
     this.shadowRoot.querySelector('.header span.next').addEventListener('click', this.onNextClick.bind(this))
     this.shadowRoot.querySelector('.header span.prev').addEventListener('click', this.onPrevClick.bind(this))
     this.$grid = this.shadowRoot.querySelector('.grid');
+    this.$grid.addEventListener('click', this.onGridClick.bind(this))
     this.$title = this.shadowRoot.querySelector('.title');
     this.renderGrid();
   } 
@@ -103,31 +110,31 @@ export default class CalendarComponent extends HTMLElement {
       this.setAttribute('year', this.getYear() -1)
     }
   }
-  onDayClick(btn, e){
-    if(btn !== this.selected || !this.selected) {
-      btn.className = "selected";
-      if(this.selected) this.selected.className = '';
-      this.selected = btn;
-      this.dispatchEvent(new CustomEvent(CALENDAR_EVENTS.SELECTED_DAY, {detail: btn.date}))
+  onGridClick(e){
+    if(e.target.tagName === "BUTTON") {
+      this.shadowRoot.querySelectorAll('.grid button').forEach(el => el.className = "" )
+      const btn = e.target;
+      btn.className = "selected"; 
+      this.selected = new Date(btn.getAttribute('date'));
+      this.dispatchEvent(new CustomEvent(CALENDAR_EVENTS.SELECTED_DAY, {detail: this.selected}))
     }
   }
   renderTitle(){
     this.$title.innerHTML = `${MONTHS[this.getMonth()]} ${this.getYear()}`
   }
+  isSelectedDayOrToday(date){
+    const _selected = this.selected || new Date(new Date().setHours(0, 0, 0, 0))
+    return _selected.getTime() === date.getTime();
+  }
   renderGrid(){
-    this.$grid.innerHTML = '';
-    const arr = getMonthDaysArray(this.getYear(), this.getMonth()).map(i => {
-      const btn = document.createElement('button');
-      btn.onclick =  this.onDayClick.bind(this, btn);
-      btn.textContent = i.getDate();
-      btn.date = i;
-      if(this.selected && this.selected.date.getTime() === i.getTime()) { 
-        btn.classList = 'selected';
-        this.selected = btn;
-      }
-      this.$grid.appendChild(btn)
-      return btn
-    });
+    const days = (days) => days.map(day => {
+      return `<button 
+        ${this.isSelectedDayOrToday(day.date) ? 'class="selected"': ''} 
+        date="${day.date}">
+        ${day.date.getDate()}
+      </button>`
+    })
+    this.$grid.innerHTML = days(getMonthDaysArray(this.getYear(), this.getMonth())).join('')
     this.renderTitle()
   }
 

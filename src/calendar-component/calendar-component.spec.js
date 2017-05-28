@@ -46,7 +46,7 @@ describe('CalendarComponent', () => {
       })
       it('should update days grid', ()=> {
         const firstBtnContent = root.querySelector('.grid').firstChild.textContent;
-        expect(firstBtnContent).toEqual("26")
+        expect(firstBtnContent.trim()).toEqual("26")
       })
       it('should change the title', ()=> {
         const title = root.querySelector('.title').textContent
@@ -64,7 +64,7 @@ describe('CalendarComponent', () => {
       })
       it('should update days grid', ()=> {
         const firstBtnContent = root.querySelector('.grid').firstChild.textContent;
-        expect(firstBtnContent).toEqual("29")
+        expect(firstBtnContent.trim()).toEqual("29")
       })
       it('should change the title', ()=> {
         const title = root.querySelector('.title').textContent
@@ -104,7 +104,7 @@ describe('CalendarComponent', () => {
 
   describe('getMonthDaysArray', () =>{
     it('creates an array of dates that represent the calendar grid', ()=>{
-      const getDate = i => (i.getDate());
+      const getDate = i => (i.date.getDate());
       expect(getMonthDaysArray(2017, 1).map(getDate)).toEqual([ 29, 30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 1, 2, 3, 4 ]);
       expect(getMonthDaysArray(2017, 2).map(getDate)).toEqual([ 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1]);
       expect(getMonthDaysArray(2017, 4).map(getDate)).toEqual([ 30, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3 ]);
