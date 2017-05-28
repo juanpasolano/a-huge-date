@@ -1,0 +1,21 @@
+:host {
+    display: block;
+}
+.control-group {
+    display:flex;
+    align-items: center;
+    .control {
+        flex:1;
+    }
+    input {
+        width: 100%;
+        padding: 7px 10px;
+        box-sizing: border-box;
+    }
+    .icon {
+        margin-left: 10px;
+        svg {
+            width: 22px;
+        }
+    }
+}
