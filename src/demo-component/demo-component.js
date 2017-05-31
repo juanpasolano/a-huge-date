@@ -9,7 +9,4 @@ export default class DemoComponent extends HTMLElement {
   connectedCallback(){
     this.shadowRoot.innerHTML = 'This is a demo component'
   }
-  onSomething(){
-    console.log('do')
-  }
 }

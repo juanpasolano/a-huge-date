@@ -18,11 +18,12 @@ describe('CalendarComponent', () => {
     it('exists', () => {
       expect(component).not.toBeNull();
     })
+
   })
 
   describe('with attributes', () => {
     let component, root;
-    const year = 2017;
+    const year = 2117;
     const month = 2;
     
     beforeEach(() => {
@@ -46,11 +47,11 @@ describe('CalendarComponent', () => {
       })
       it('should update days grid', ()=> {
         const firstBtnContent = root.querySelector('.grid').firstChild.textContent;
-        expect(firstBtnContent.trim()).toEqual("26")
+        expect(firstBtnContent.trim()).toEqual("28")
       })
       it('should change the title', ()=> {
         const title = root.querySelector('.title').textContent
-        expect(title).toEqual("Apr 2017")
+        expect(title).toEqual("Apr 2117")
       })
     })
 
@@ -64,11 +65,11 @@ describe('CalendarComponent', () => {
       })
       it('should update days grid', ()=> {
         const firstBtnContent = root.querySelector('.grid').firstChild.textContent;
-        expect(firstBtnContent.trim()).toEqual("29")
+        expect(firstBtnContent.trim()).toEqual("31")
       })
       it('should change the title', ()=> {
         const title = root.querySelector('.title').textContent
-        expect(title).toEqual("Feb 2017")
+        expect(title).toEqual("Feb 2117")
       })
     })
     

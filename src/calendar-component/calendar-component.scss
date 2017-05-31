@@ -50,6 +50,9 @@ $cellWidth:  14.6%;
         &:focus {
             outline:0;
         }
+        &:disabled{
+            color:#cccccc;
+        }
         &.selected {
             background: #4ecdc4;
             border: 1px solid #4ecdc4;

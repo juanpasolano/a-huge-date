@@ -3,6 +3,15 @@ import { CALENDAR_EVENTS } from 'calendar-component/calendar-component';
 import { toDate } from 'date-picker-component/date-picker-component';
 import { TIMEPICKER_EVENTS } from 'time-picker-component/time-picker-component';
 
+const template = () => {
+  return `
+    <date-picker-component></date-picker-component>
+    <time-picker-component></time-picker-component>
+    <button class="save">Save</button>
+    <button class="cancel">Cancel</button>
+    <div class="selected"></div>
+  `;
+}
 export default class AppointmentComponent extends HTMLElement {
   static HTMLTagName () { return 'appointment-component'};
   constructor(){
@@ -12,13 +21,10 @@ export default class AppointmentComponent extends HTMLElement {
     this.time = null;
   }
   connectedCallback(){
-    this.shadowRoot.innerHTML = `
-      <date-picker-component></date-picker-component>
-      <time-picker-component></time-picker-component>
-      <button class="save">Save</button>
-      <button class="cancel">Cancel</button>
-      <div class="selected"></div>
-    `;
+    this.render();
+  }
+  render(){
+    this.shadowRoot.innerHTML = template();
     this.$date = this.shadowRoot.querySelector('date-picker-component')
     this.$time = this.shadowRoot.querySelector('time-picker-component')
     this.$save = this.shadowRoot.querySelector('button.save')
@@ -43,6 +49,6 @@ export default class AppointmentComponent extends HTMLElement {
     }
   }
   onCancelClick(e){
-    console.log(e)
+    this.render();
   }
 }

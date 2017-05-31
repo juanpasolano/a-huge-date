@@ -111,6 +111,8 @@ export default class CalendarComponent extends HTMLElement {
     }
   }
   onGridClick(e){
+    // We delegate the button click to the grid so we dont have to keep adding it 
+    // to the buttons each time they are re rendered
     if(e.target.tagName === "BUTTON") {
       this.shadowRoot.querySelectorAll('.grid button').forEach(el => el.className = "" )
       const btn = e.target;
@@ -126,9 +128,22 @@ export default class CalendarComponent extends HTMLElement {
     const _selected = this.selected || new Date(new Date().setHours(0, 0, 0, 0))
     return _selected.getTime() === date.getTime();
   }
+  isDateBeforeToday(date){
+    return new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)
+  }
+  isDateWeekend(date){
+    const day = new Date(date).getDay()
+    return day === 6 || day === 0
+  }
   renderGrid(){
+    const filter = this.getAttribute('filter');
     const days = (days) => days.map(day => {
+      const isPrev = this.isDateBeforeToday(day.date);
+      const isWeekend = this.isDateWeekend(day.date);
+      const isWeekday = !this.isDateWeekend(day.date);
+      const isDisabled = isPrev || (isWeekend && filter === 'weekdays') || (isWeekday && filter === 'weekends')
       return `<button 
+        ${isDisabled ? 'disabled ': ' '}
         ${this.isSelectedDayOrToday(day.date) ? 'class="selected"': ''} 
         date="${day.date}">
         ${day.date.getDate()}
@@ -139,12 +154,12 @@ export default class CalendarComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['year', 'month']
+    return ['year', 'month', 'filter']
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    if(this.rendered && ['year', 'month'].indexOf(name) > -1) {
+    if(this.rendered && ['year', 'month', 'filter'].indexOf(name) > -1) {
       this.renderGrid();
-    }
+    } 
   }
 }
