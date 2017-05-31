@@ -2,14 +2,21 @@
 import { CALENDAR_EVENTS } from 'calendar-component/calendar-component';
 import { toDate } from 'date-picker-component/date-picker-component';
 import { TIMEPICKER_EVENTS } from 'time-picker-component/time-picker-component';
+import styles from './appointment-component.scss';
 
 const template = () => {
   return `
-    <date-picker-component></date-picker-component>
+    <style>
+      ${styles}
+    </style>
+    <date-picker-component style="position:"></date-picker-component>
     <time-picker-component></time-picker-component>
-    <button class="save">Save</button>
-    <button class="cancel">Cancel</button>
-    <div class="selected"></div>
+    
+    <div class="buttons">
+      <button class="save primary">Save</button>
+      <button class="reset">Reset</button>
+    </div>
+    <div class="selected">Good! your appointment is set for 10/11/2017 at 5:45 PM. Thanks</div>
   `;
 }
 export default class AppointmentComponent extends HTMLElement {
@@ -28,12 +35,12 @@ export default class AppointmentComponent extends HTMLElement {
     this.$date = this.shadowRoot.querySelector('date-picker-component')
     this.$time = this.shadowRoot.querySelector('time-picker-component')
     this.$save = this.shadowRoot.querySelector('button.save')
-    this.$cancel = this.shadowRoot.querySelector('button.cancel')
+    this.$reset = this.shadowRoot.querySelector('button.reset')
     this.$selected = this.shadowRoot.querySelector('.selected')
     this.$date.addEventListener(CALENDAR_EVENTS.SELECTED_DAY, this.onSelectedDay.bind(this))
     this.$time.addEventListener(TIMEPICKER_EVENTS.SELECTED_TIME, this.onSelectedTime.bind(this))
     this.$save.addEventListener('click', this.onSaveClick.bind(this))
-    this.$cancel.addEventListener('click', this.onCancelClick.bind(this))
+    this.$reset.addEventListener('click', this.onResetClick.bind(this))
 
     this.time = this.$time.selectedTime;
   }
@@ -48,7 +55,7 @@ export default class AppointmentComponent extends HTMLElement {
       this.$selected.innerHTML = `Good! your appointment is set for ${toDate(this.date)} at ${this.time}. Thanks`
     }
   }
-  onCancelClick(e){
+  onResetClick(e){
     this.render();
   }
 }

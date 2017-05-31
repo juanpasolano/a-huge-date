@@ -1,9 +1,11 @@
+import styles from './calendar-filter-component.scss'
 
 const template = ({selectedFilter, filters}) => {
   return `
-    <div class="filters">
-      ${filters.map(filter => {
-        return `
+    <style>${styles}</style> 
+    ${filters.map(filter => {
+      return `
+        <div class="radio">
           <input 
             type="radio" 
             name="filter" 
@@ -11,9 +13,9 @@ const template = ({selectedFilter, filters}) => {
             id="${filter.value}" 
             value="${filter.value}"> 
           <label for="${filter.value}">${filter.label}</label>
-        `
-      }).join('')}
-    </div> 
+        </div> 
+      `
+    }).join('')}
   `
 }
 const FILTERS = [

@@ -11,10 +11,10 @@ const template = () => {
 
       <div class="control-group">
         <div class="control"> 
-          <input type="text" placeholder="Choose a date..." disabled/>
-        </div>
-        <div class="icon"> 
-          ${calendarIcon}
+          <input type="text" placeholder="Choose a date..."/>
+          <div class="icon"> 
+            ${calendarIcon}
+          </div>
         </div>
       </div>
        

@@ -13,9 +13,9 @@ const template = ({options, selectedTime}) => {
               return `<option ${option === selectedTime ? 'selected': ''}>${option}</option>`
             })}
           </select>
-        </div>
-        <div class="icon"> 
-          ${clockIcon}
+          <div class="icon"> 
+            ${clockIcon}
+          </div>
         </div>
       </div>
     </div>

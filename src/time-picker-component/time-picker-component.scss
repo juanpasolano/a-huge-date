@@ -6,20 +6,23 @@
     align-items: center;
     .control {
         flex:1;
+        position: relative;
     }
     select {
         width: 100%;
-        padding: 7px 10px;
         box-sizing: border-box;
         width: 100%;
         background: white;
         border: 1px solid #efefef;
         -webkit-appearance: none;
         -webkit-border-radius: 0px;
-        padding: 10px 10px;
+        padding: 17px 13px;
     }
     .icon {
-        margin-left: 10px;
+        position: absolute;
+        right: 10px;
+        top: 54%;
+        transform: translateY(-50%);
         svg {
             width: 22px;
             height: 22px;
