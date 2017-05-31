@@ -37,6 +37,7 @@ export default class DatePickerComponent extends HTMLElement {
     super();
     this.attachShadow({mode: 'open'});
     this.isOpen = false;
+    this.onWindowClick = this.onWindowClick.bind(this)
   }
   connectedCallback(){
     this.shadowRoot.innerHTML = template();
@@ -46,6 +47,17 @@ export default class DatePickerComponent extends HTMLElement {
     this.$calendar.addEventListener(CALENDAR_EVENTS.SELECTED_DAY, this.onSelectedDay.bind(this))
     this.$filter = this.shadowRoot.querySelector('calendar-filter-component')
     this.$filter.addEventListener(FILTER_EVENTS.SELECTED_FILTER, this.onFilterChange.bind(this))
+    
+    window.addEventListener('click', this.onWindowClick) //for onclick outside
+  }
+  disconnectedCallback(){
+    window.removeEventListener('click', this.onWindowClick)
+  }
+  onWindowClick(e){
+    const path = e.path.map(i => i.localName)
+    if(!path.includes('date-picker-component') && this.isOpen){
+      this.closeCalendar();
+    }
   }
   onFilterChange(e){
     this.$calendar.setAttribute('filter', e.detail)
@@ -55,13 +67,19 @@ export default class DatePickerComponent extends HTMLElement {
     this.$input.value = toDate(new Date(date));
     this.dispatchEvent(new CustomEvent(CALENDAR_EVENTS.SELECTED_DAY, {detail: date}))
   }
+  openCalendar(){
+    this.isOpen = true;
+    this.$calendar.classList = 'visible'
+  }
+  closeCalendar(){
+    this.isOpen = false;
+    this.$calendar.classList = ''
+  }
   onInputClicked() {
     if(this.isOpen){
-      this.isOpen = false;
-      this.$calendar.classList = ''
+      this.closeCalendar();
     }else {
-      this.isOpen = true;
-      this.$calendar.classList = 'visible'
+      this.openCalendar()
     }
   }
 }

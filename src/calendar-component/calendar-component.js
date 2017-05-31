@@ -158,7 +158,7 @@ export default class CalendarComponent extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    if(this.rendered && ['year', 'month', 'filter'].indexOf(name) > -1) {
+    if(this.rendered && ['year', 'month', 'filter'].includes(name)) {
       this.renderGrid();
     } 
   }
