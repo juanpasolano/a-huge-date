@@ -18,6 +18,14 @@ const template = () => {
     </div>
   `
 }
+const toLeadingZero = (n) => {
+  return n > 9 ? n : `0${n}`
+}
+export const toDate = (date, separator = '/') => {
+  const day = toLeadingZero(date.getDate())
+  const month = toLeadingZero(date.getMonth())
+  return `${day}/${month}/${date.getFullYear()}`
+}
 
 export default class DatePickerComponent extends HTMLElement {
   static HTMLTagName () { return 'date-picker-component'};
@@ -33,17 +41,10 @@ export default class DatePickerComponent extends HTMLElement {
     this.$calendar = this.shadowRoot.querySelector('calendar-component');
     this.$calendar.addEventListener(CALENDAR_EVENTS.SELECTED_DAY, this.onSelectedDay.bind(this))
   }
-  toLeadingZero(n){
-    return n > 9 ? n : `0${n}`
-  }
-  toDate(date){
-    const day = this.toLeadingZero(date.getDate())
-    const month = this.toLeadingZero(date.getMonth())
-    return `${day}/${month}/${date.getFullYear()}`
-  }
   onSelectedDay(e){
     const date = e.detail;
-    this.$input.value = this.toDate(date);
+    this.$input.value = toDate(new Date(date));
+    this.dispatchEvent(new CustomEvent(CALENDAR_EVENTS.SELECTED_DAY, {detail: date}))
   }
   onInputClicked() {
     if(this.isOpen){

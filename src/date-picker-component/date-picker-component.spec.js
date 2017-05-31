@@ -1,4 +1,5 @@
 import DatePickerComponent from './date-picker-component'
+import { CALENDAR_EVENTS} from 'calendar-component/calendar-component';
 const tagName = DatePickerComponent.HTMLTagName(); 
 
 describe('DatePickerComponent', () => {
