@@ -124,9 +124,9 @@ export default class CalendarComponent extends HTMLElement {
   renderTitle(){
     this.$title.innerHTML = `${MONTHS[this.getMonth()]} ${this.getYear()}`
   }
-  isSelectedDayOrToday(date){
-    const _selected = this.selected || new Date(new Date().setHours(0, 0, 0, 0))
-    return _selected.getTime() === date.getTime();
+  isToday(date){
+    const today = new Date(new Date().setHours(0, 0, 0, 0))
+    return today.getTime() === date.getTime();
   }
   isDateBeforeToday(date){
     return new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)
@@ -142,9 +142,11 @@ export default class CalendarComponent extends HTMLElement {
       const isWeekend = this.isDateWeekend(day.date);
       const isWeekday = !this.isDateWeekend(day.date);
       const isDisabled = isPrev || (isWeekend && filter === 'weekdays') || (isWeekday && filter === 'weekends')
+      
       return `<button 
         ${isDisabled ? 'disabled ': ' '}
-        ${this.isSelectedDayOrToday(day.date) ? 'class="selected"': ''} 
+        ${this.selected  ? 'class="selected"': ''} 
+        ${this.isToday(day.date)  ? 'is-today': ''} 
         date="${day.date}">
         ${day.date.getDate()}
       </button>`

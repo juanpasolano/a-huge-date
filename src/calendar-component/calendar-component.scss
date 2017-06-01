@@ -48,6 +48,9 @@ $cellWidth:  14.6%;
         margin-left: -1px;
         font-size: 12px;
         transition: all .2s ease-in-out;
+        &[is-today]{
+            background: #eaeaea;
+        }
         &:focus {
             outline:0;
         }
