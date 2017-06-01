@@ -22,16 +22,25 @@ const template = ({options, selectedTime}) => {
   `
 }
 
-const getTimes = () => {
+export const getTimes = (fromHour=0, fromMinute=0) => {
   const limitTime = new Date().setHours()
   let hours = []
-  for (var hoursAday = 0; hoursAday <= 23; hoursAday++) {
+  const _fromHour = fromMinute > 45 ? fromHour+1: fromHour;
+
+  for (var hoursAday = _fromHour; hoursAday <= 23; hoursAday++) {
     const d = new Date();
-    hours.push(d.setHours(hoursAday, 0, 0, 0))
-    for (var minutesInterval = 1; minutesInterval < 4; minutesInterval++) {
-      const time = d.setHours(hoursAday, minutesInterval*15, 0, 0)
-      if(time)
-      hours.push(time)
+
+    let _fromMinute
+    if(hoursAday === _fromHour && fromMinute > 0){
+      _fromMinute = [0, 15, 30, 45].findIndex(i => i >= fromMinute || (i === 0 && fromMinute>45))
+    } else {
+      _fromMinute = 0
+    }
+    hours.push(d.setHours(hoursAday, _fromMinute*15, 0, 0))
+
+    for (var minutesInterval = _fromMinute; minutesInterval < 3; minutesInterval++) {
+      const time = d.setHours(hoursAday, (minutesInterval+1)*15, 0, 0)
+      if(time) hours.push(time)
     }
   }
   return hours;
@@ -39,6 +48,7 @@ const getTimes = () => {
 export const TIMEPICKER_EVENTS = {
   SELECTED_TIME: 'selected-time'
 }
+const dateToString = date => new Date(date).toLocaleTimeString().replace(':00 ', ' ');
 
 export default class TimePickerComponent extends HTMLElement {
   static HTMLTagName () { return 'time-picker-component'};
@@ -52,8 +62,26 @@ export default class TimePickerComponent extends HTMLElement {
     this.dispatchEvent(new CustomEvent(TIMEPICKER_EVENTS.SELECTED_TIME, {detail:e.target.value}))
   }
   connectedCallback(){
-    const options = getTimes().map(i => new Date(i).toLocaleTimeString(i).replace(':00 ', ' '))
+    this.render()
+  }
+  set isToday(val){
+    this.setAttribute('is-today', val);
+    this.render()
+  }
+  render(){
+    const hours = this.getAttribute('is-today') ? new Date().getHours() : 0;
+    const minutes = this.getAttribute('is-today') ? new Date().getHours() : 0;
+    const options = getTimes(hours, minutes).map(dateToString)
     this.shadowRoot.innerHTML = template({options, selectedTime: this.selectedTime});
     this.shadowRoot.querySelector('select').addEventListener('change', this.onSelectChange.bind(this))
+  }
+
+  static get observedAttributes() {
+    return ['is-today']
+  }
+  attributeChangedCallback(name, oldVal, newVal) {
+    if(['is-today'].includes(name)) {
+      this.render();
+    } 
   }
 }

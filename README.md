@@ -7,7 +7,7 @@ After good old `npm install` you can:
 
 | Command        | What it does           | Coolness  |
 | ------------- |:-------------:| -----:|
-| `npm run start`     | Runs the program on http://localhost:8000/ | ⭐️ |
+| `npm start`     | Runs the program on http://localhost:8000/ | ⭐️ |
 | `npm run build:watch`     | Starts webpack      |   ⭐️ ⭐️  |
 | `npm run test` | Starts karma unit tests      |  ⭐️ ⭐️ |
 | `npm run dev` | Concurrently runs all of the above     |    ⭐️ ⭐️ ⭐️ ⭐️ ⭐️ |

@@ -48,6 +48,12 @@ export default class AppointmentComponent extends HTMLElement {
   }
   onSelectedDay(e){
     this.date = new Date(e.detail);
+    if(this.date.setHours(0,0,0,0) === new Date().setHours(0,0,0,0)){
+      console.log('set')
+      this.$time.setAttribute('is-today', 'as'); 
+    } else {
+      this.$time.removeAttribute('is-today');
+    }
   }
   onSelectedTime(e){
     this.time = e.detail;

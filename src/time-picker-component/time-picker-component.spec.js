@@ -1,4 +1,4 @@
-import TimePickerComponent, { TIMEPICKER_EVENTS } from './time-picker-component';
+import TimePickerComponent, { TIMEPICKER_EVENTS, getTimes } from './time-picker-component';
 const tagName = TimePickerComponent.HTMLTagName(); 
 
 describe('TimePickerComponent', () => {
@@ -34,5 +34,33 @@ describe('TimePickerComponent', () => {
       root.querySelector('select').value = changeTimeTo;
       root.querySelector('select').dispatchEvent(new Event('change'))
       expect(handlerSpy).toHaveBeenCalled()
+  })
+
+  describe('getTimes', () => {
+    it('returns an array of 95 hours', ()=>{
+      const possibleTimes = 24*4;
+      const times = getTimes();
+      expect(times.length).toEqual(possibleTimes); 
+    })
+    it('returns an array depending on the start hour', ()=>{
+      const possibleTimes = (12*4)-1;
+      const times = getTimes(12, 10);
+      const options = times.map(i => new Date(i).toLocaleTimeString(i).replace(':00 ', ' '))
+      expect(times.length).toEqual(possibleTimes); 
+      expect(options[0]).toEqual("12:15 PM"); 
+      expect(options[1]).toEqual("12:30 PM"); 
+      expect(options[2]).toEqual("12:45 PM"); 
+      expect(options[3]).toEqual("1:00 PM"); 
+    })
+    it('returns an array depending on the start hour', ()=>{
+      const possibleTimes = (12*3)-3;
+      const times = getTimes(15, 35);
+      const options = times.map(i => new Date(i).toLocaleTimeString(i).replace(':00 ', ' '))
+      expect(times.length).toEqual(possibleTimes); 
+      expect(options[0]).toEqual("3:45 PM"); 
+      expect(options[1]).toEqual("4:00 PM"); 
+      expect(options[2]).toEqual("4:15 PM"); 
+      expect(options[3]).toEqual("4:30 PM"); 
+    })
   })
 })
