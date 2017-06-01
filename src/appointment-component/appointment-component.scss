@@ -21,3 +21,22 @@
     text-align: center;
     margin-top: 20px;
 }
+
+@media only screen and (min-width: 768px) {
+    date-picker-component {
+        width: 70%;
+        margin-right:20px;
+    }
+    time-picker-component {
+        width: 30%;
+    }
+    .controls {
+        display: flex;
+    }
+    .buttons {
+        display: block;
+    }
+    .selected {
+        text-align: left;
+    }
+}

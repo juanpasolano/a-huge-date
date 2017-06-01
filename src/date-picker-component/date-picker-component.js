@@ -6,20 +6,18 @@ const calendarIcon = '<svg enable-background="new 0 0 32 32" height="22px" id="L
 const template = () => {
   return `
     <style>${styles}</style> 
-    <div>
-      <calendar-filter-component></calendar-filter-component>
+    <calendar-filter-component></calendar-filter-component>
 
-      <div class="control-group">
-        <div class="control"> 
-          <input type="text" placeholder="Choose a date..."/>
-          <div class="icon"> 
-            ${calendarIcon}
-          </div>
+    <div class="control-group">
+      <div class="control"> 
+        <input type="text" placeholder="Choose a date..."/>
+        <div class="icon"> 
+          ${calendarIcon}
         </div>
       </div>
-       
-      <calendar-component></calendar-component>
     </div>
+      
+    <calendar-component></calendar-component>
   `
 }
 const toLeadingZero = (n) => {
