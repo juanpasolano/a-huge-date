@@ -1,5 +1,5 @@
 ## a-huge-date
-Small excercise to test WebComponents from the SPEC. 
+Testing Web Components for UI.  
 
 ## Install & run
 After good old `npm install` you can:
