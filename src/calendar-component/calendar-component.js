@@ -128,6 +128,9 @@ export default class CalendarComponent extends HTMLElement {
     const today = new Date(new Date().setHours(0, 0, 0, 0))
     return today.getTime() === date.getTime();
   }
+  isSelected(date){
+    return new Date(date).getTime() === new Date(this.selected).getTime()
+  }
   isDateBeforeToday(date){
     return new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)
   }
@@ -145,7 +148,7 @@ export default class CalendarComponent extends HTMLElement {
       
       return `<button 
         ${isDisabled ? 'disabled ': ' '}
-        ${this.selected  ? 'class="selected"': ''} 
+        ${this.isSelected(day.date)  ? 'class="selected"': ''} 
         ${this.isToday(day.date)  ? 'is-today': ''} 
         date="${day.date}">
         ${day.date.getDate()}
